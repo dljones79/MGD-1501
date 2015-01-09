@@ -1,3 +1,8 @@
+// David Jones
+// MGD 1501
+// Week 1
+// Ninja Quest
+
 package com.fullsail.djones.android.ninjaquest;
 
 import com.badlogic.gdx.ApplicationAdapter;
