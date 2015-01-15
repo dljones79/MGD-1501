@@ -5,18 +5,15 @@
 
 package com.fullsail.djones.android.ninjaquest;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 
-public class MyGdxGame extends ApplicationAdapter {
+public class MyGdxGame extends Game {
 
     // Declare variables being used
     private Texture goodNinja;
@@ -35,6 +32,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+
+        setScreen(new GameScreen());
+
+
+
+        /* Old Code for first turn in below:
 
         // load the images for the ninjas
         goodNinja = new Texture(Gdx.files.internal("ninja_01.png"));
@@ -119,5 +122,9 @@ public class MyGdxGame extends ApplicationAdapter {
         if (goodNinjaRec.overlaps(princessRec)){
             giggleSound.play();
         }
-	}
+        */
+	} // end create method
+
+
 }
+
