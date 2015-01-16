@@ -6,16 +6,19 @@
 package com.fullsail.djones.android.ninjaquest;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * David Jones
+ * MGD 1501
+ * Full Sail University
+ */
 public class MyGdxGame extends Game {
 
+    // Declarations below were used in first turn in
+    // Not needed for new design
+
     // Declare variables being used
+    /*
     private Texture goodNinja;
     private Texture badNinja;
     private Texture princess;
@@ -29,10 +32,12 @@ public class MyGdxGame extends Game {
     private Rectangle goodNinjaRec;
     private Rectangle badNinjaRec;
     private Rectangle princessRec;
-	
+	*/
+
 	@Override
 	public void create () {
 
+        // Set the screen to our new GameScreen.
         setScreen(new GameScreen());
 
 

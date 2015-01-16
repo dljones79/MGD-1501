@@ -5,6 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.fullsail.djones.android.ninjaquest.stages.GameStage;
 
+/**
+ * David Jones
+ * MGD 1501
+ * Full Sail University
+ */
+
 public class GameScreen implements Screen {
 
     private GameStage gameStage;
