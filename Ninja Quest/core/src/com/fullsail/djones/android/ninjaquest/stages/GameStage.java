@@ -1,6 +1,7 @@
 package com.fullsail.djones.android.ninjaquest.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,6 +21,7 @@ import com.fullsail.djones.android.ninjaquest.actors.Background;
 import com.fullsail.djones.android.ninjaquest.actors.Baddie;
 import com.fullsail.djones.android.ninjaquest.actors.GoodNinja;
 import com.fullsail.djones.android.ninjaquest.actors.Ground;
+import com.fullsail.djones.android.ninjaquest.actors.Score;
 import com.fullsail.djones.android.ninjaquest.utils.ActorUtils;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
 import com.fullsail.djones.android.ninjaquest.utils.WorldData;
@@ -64,6 +66,12 @@ public class GameStage extends Stage implements ContactListener{
     // Sounds
     private Sound jumpSound;
     private Sound landSound;
+    private Sound hitSound;
+    private Music backgroundMusic;
+
+    // For Score
+    private Score score;
+
 
     // Constructor
     public GameStage() {
@@ -76,16 +84,37 @@ public class GameStage extends Stage implements ContactListener{
         // Load sounds
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("jumping.wav"));
         landSound = Gdx.audio.newSound(Gdx.files.internal("thud.wav"));
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("punch_response.wav"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("background_music.mp3"));
 
-        createWorld();
+        // start music
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.5f);
+        backgroundMusic.play();
+
+
         setupCamera();
+        createWorld();
         setupControls();
 
         // For debugging
         /*
         renderer = new Box2DDebugRenderer();
         */
+
+        //TODO: Add Start and Pause Buttons
+        //TODO: Handle game over.
     }
+
+    // Set up Score Display
+    private void setupScoreDisplay() {
+        Rectangle bounds = new Rectangle(getCamera().viewportWidth * 47 / 64,
+                getCamera().viewportHeight * 57 / 64, getCamera().viewportWidth / 4,
+                getCamera().viewportHeight / 8);
+        score = new Score(bounds);
+        addActor(score);
+    }
+
 
     // Set up camera
     private void setupCamera() {
@@ -103,8 +132,8 @@ public class GameStage extends Stage implements ContactListener{
         world.setContactListener(this);
         setBackground();
         createGround();
-        makeBadGuy();
-        createGoodNinja();
+        setupDisplay();
+        createCharacters();
     }
 
     // Create the background
@@ -118,6 +147,17 @@ public class GameStage extends Stage implements ContactListener{
         addActor(ground);
     }
 
+    // Setup display
+    private void setupDisplay (){
+        setupScoreDisplay();
+    }
+
+    // Create characters
+    private void createCharacters(){
+        createGoodNinja();
+        makeBadGuy();
+    }
+
     // Create good ninja actor
     private void createGoodNinja() {
         goodNinja = new GoodNinja(WorldData.createGoodNinja(world));
@@ -129,7 +169,7 @@ public class GameStage extends Stage implements ContactListener{
     public void act(float delta) {
         super.act(delta);
 
-        // Create an array of bodies with count equalt to bodies in world
+        // Create an array of bodies with count equal to bodies in world
         Array<Body> enemies = new Array<Body>(world.getBodyCount());
         world.getBodies(enemies);
 
@@ -179,6 +219,7 @@ public class GameStage extends Stage implements ContactListener{
                 getCamera().viewportWidth / 2, getCamera().viewportHeight);
         leftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
         Gdx.input.setInputProcessor(this);
+
     }
 
     // did the user touch the screen?
@@ -234,10 +275,14 @@ public class GameStage extends Stage implements ContactListener{
         // good ninja didCollide()
         if ((ActorUtils.bodyIsGoodNinja(bodyA) && ActorUtils.bodyIsBaddie(bodyB) ||
                 (ActorUtils.bodyIsBaddie(bodyA) && ActorUtils.bodyIsGoodNinja(bodyB)))){
-            goodNinja.didCollide();
+            if (goodNinja.didCollide()){
+                return;
+            }
+            goodNinja.collision();
+            hitSound.play();
         }
 
-        // If good ninja hits grounds
+        // If good ninja hits ground
         // GoodNinja landed
         // Sound played
         if ((ActorUtils.bodyIsGoodNinja(bodyA) && ActorUtils.bodyIsGround(bodyB))
@@ -245,6 +290,7 @@ public class GameStage extends Stage implements ContactListener{
             goodNinja.ninjaLanded();
             landSound.play();
         }
+
     }
 
     @Override

@@ -26,15 +26,15 @@ public class Constants {
     public static final float GROUND_DENSITY = 0f;
 
     // Good Ninja Constants
-    public static final float GOODNINJA_X = 2;
+    public static final float GOODNINJA_X = 7;
     public static final float GOODNINJA_Y = GROUND_Y + GROUND_HEIGHT;
-    public static final float GOODNINJA_WIDTH = 1f;
+    public static final float GOODNINJA_WIDTH = 1.5f;
     public static final float GOODNINJA_HEIGHT = 2f;
     public static float GOODNINJA_DENSITY = 0.5f;
-    public static final float GOODNINJA_GRAVITY = 3f;
-    public static final Vector2 GOODNINJA_JUMPING = new Vector2(0, 13f);
+    public static final float GOODNINJA_GRAVITY = 2f;
+    public static final Vector2 GOODNINJA_JUMPING = new Vector2(0, 20f);
     public static final float GOODNINJA_CONTACT_IMPULSE = 10F;
-    public static final float GOODNINJA_SLIDE_X = 2f;
+    public static final float GOODNINJA_SLIDE_X = 7f;
     public static final float GOODNINJA_SLIDE_Y = 1.5f;
 
     // Background Image
@@ -45,7 +45,29 @@ public class Constants {
     public static final float ENEMY_X = 25f;
     public static final float ENEMY_DENSITY = GOODNINJA_DENSITY;
     public static final float STANDING_NINJA_Y = 1.5f;
-    public static final float FLYING_DRAGON_Y = 3f;
-    public static final Vector2 ENEMY_VELOCITY = new Vector2(-10f, 0);
+    public static final float FLYING_EYE_Y = 3f;
+    public static final float BLUE_CREATURE_Y = 2f;
+    public static final Vector2 ENEMY_VELOCITY = new Vector2(-11f, 0);
 
+    // Textures for sprites
+    public static final String ATLAS_PATH = "spritesheet.txt";
+    public static final String[] NINJA_RUNNING_REGION = new String[] {
+            "ninjaCat_run1", "ninjaCat_run2", "ninjaCat_run3", "ninjaCat_run4",
+            "ninjaCat_run5"};
+    public static final String[] NINJA_SLIDE_REGION = new String[] {
+            "ninjaCat_slide1", "ninjaCat_slide2"};
+    public static final String NINJA_SLIDE = "ninjaCat_slide1";
+    public static final String NINJA_HIT = "ninjaCat_hit";
+    public static final String[] NINJA_JUMP = new String[] {
+            "ninjaCat_jump1", "ninjaCat_jump2", "ninjaCat_jump3",
+            "ninjaCat_jump4", "ninjaCat_jump5", "ninjaCat_jump6"};
+    public static final String[] BLACK_NINJA_RUN = new String [] {
+            "black_walk1", "black_walk2", "black_walk3", "black_walk4"};
+    public static final String[] BLUE_CREATURE =  new String [] {
+            "blue_creature1", "blue_creature2", "blue_creature3", "blue_creature4"};
+    public static final String[] FLYING_EYE = new String [] {
+            "flying_eye1", "flying_eye2", "flying_eye3", "flying_eye4"};
+
+    // Fonts
+    public static final String FONT_PATH = "shoguns_clan.ttf";
 }

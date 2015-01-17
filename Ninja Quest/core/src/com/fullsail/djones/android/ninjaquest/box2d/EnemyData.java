@@ -11,12 +11,18 @@ import com.fullsail.djones.android.ninjaquest.utils.Constants;
  */
 public class EnemyData extends UserData {
 
+    private String[] textureRegions;
     private Vector2 velocity;
 
-    public EnemyData(float width, float height) {
+    public EnemyData(float width, float height, String[] textureRegions) {
         super(width, height);
+        this.textureRegions = textureRegions;
         dataType = DataTypes.ENEMY;
         velocity = Constants.ENEMY_VELOCITY;
+    }
+
+    public String[] getTextureRegions(){
+        return textureRegions;
     }
 
     // Set the linear velocity for the enemy

@@ -19,7 +19,7 @@ public class Ground extends GameActor {
     private final TextureRegion textureRegion;
     private Rectangle textureBoundsOne;
     private Rectangle textureBoundsTwo;
-    private int velocity = 10;
+    private int velocity = 9;
 
     public Ground(Body body) {
         super(body);

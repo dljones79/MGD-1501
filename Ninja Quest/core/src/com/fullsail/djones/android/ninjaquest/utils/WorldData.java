@@ -105,7 +105,8 @@ public class WorldData {
         body.resetMassData();
 
         // Set data type to EnemyData
-        EnemyData enemyData = new EnemyData(enemyDataTypes.getWidth(), enemyDataTypes.getHeight());
+        EnemyData enemyData = new EnemyData(enemyDataTypes.getWidth(), enemyDataTypes.getHeight(),
+                enemyDataTypes.getRegions());
         body.setUserData(enemyData);
 
         // Dispose of polygon shape
