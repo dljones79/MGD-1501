@@ -80,7 +80,11 @@ public class GameStage extends Stage implements ContactListener{
         createWorld();
         setupCamera();
         setupControls();
+
+        // For debugging
+        /*
         renderer = new Box2DDebugRenderer();
+        */
     }
 
     // Set up camera
@@ -92,14 +96,15 @@ public class GameStage extends Stage implements ContactListener{
 
     // Custom method to build new world
     // Call methods to create ground and ninja
+    // Make Bad Guys
     // Handle contacts
     private void createWorld() {
         world = WorldData.buildWorld();
         world.setContactListener(this);
         setBackground();
         createGround();
-        createGoodNinja();
         makeBadGuy();
+        createGoodNinja();
     }
 
     // Create the background

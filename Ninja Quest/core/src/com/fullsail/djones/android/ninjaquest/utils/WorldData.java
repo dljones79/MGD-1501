@@ -40,7 +40,7 @@ public class WorldData {
         body.createFixture(shape, Constants.GROUND_DENSITY);
 
         // Set data type to ground
-        body.setUserData(new GroundData());
+        body.setUserData(new GroundData(Constants.GROUND_WIDTH, Constants.GROUND_HEIGHT));
 
         // Dispose of the polygon shape
         shape.dispose();

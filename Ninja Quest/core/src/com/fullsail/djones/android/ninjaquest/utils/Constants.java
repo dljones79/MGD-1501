@@ -12,6 +12,7 @@ public class Constants {
     // App screen dimensions
     public static final int APP_WIDTH = 800;
     public static final int APP_HEIGHT = 480;
+    public static final float CONVERT_TO_SCREEN = 32;
 
     // Constant for the world gravity
     // Set at negative 10 m/2^2
@@ -38,7 +39,7 @@ public class Constants {
 
     // Background Image
     public static final String BACKGROUND_IMG = "background.png";
-    public static final String GROUND_IMG = "ground.jpg";
+    public static final String GROUND_IMG = "ground.png";
 
     // Constants for enemies
     public static final float ENEMY_X = 25f;

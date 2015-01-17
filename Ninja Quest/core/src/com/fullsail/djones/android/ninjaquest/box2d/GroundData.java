@@ -10,8 +10,8 @@ import com.fullsail.djones.android.ninjaquest.enums.DataTypes;
 public class GroundData extends UserData {
 
     // Constructor
-    public GroundData() {
-        super();
+    public GroundData(float width, float height) {
+        super(width, height);
         super.dataType = DataTypes.GROUND;
     }
 }
