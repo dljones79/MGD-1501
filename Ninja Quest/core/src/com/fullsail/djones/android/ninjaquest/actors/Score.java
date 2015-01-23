@@ -60,4 +60,8 @@ public class Score extends Actor {
     public int getScore() {
         return (int) Math.floor(scoreStreak);
     }
+
+    public void setMultiplierAmount(int multiplierAmount) {
+        this.multiplierAmount = multiplierAmount;
+    }
 }

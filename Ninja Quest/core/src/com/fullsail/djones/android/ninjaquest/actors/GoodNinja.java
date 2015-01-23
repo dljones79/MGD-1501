@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.fullsail.djones.android.ninjaquest.box2d.GoodNinjaData;
+import com.fullsail.djones.android.ninjaquest.enums.DifficultyLevel;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
 
 /**
@@ -143,5 +144,15 @@ public class GoodNinja extends GameActor {
             batch.draw(runAnimation.getKeyFrame(stateTime, true), onScreenRect.x, onScreenRect.y,
                     onScreenRect.getWidth(), onScreenRect.getHeight());
         }
+    }
+
+    public void onLevelChange(DifficultyLevel difficultyLevel){
+        setGravity(difficultyLevel.getGoodNinjaGravity());
+        getUserData().setLinearJump(difficultyLevel.getGoodNinjaJumpingImpulse());
+    }
+
+    public void setGravity(float gravity){
+        actorBody.setGravityScale(gravity);
+        actorBody.resetMassData();
     }
 }

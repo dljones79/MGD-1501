@@ -21,9 +21,14 @@ import com.fullsail.djones.android.ninjaquest.actors.Background;
 import com.fullsail.djones.android.ninjaquest.actors.Baddie;
 import com.fullsail.djones.android.ninjaquest.actors.GoodNinja;
 import com.fullsail.djones.android.ninjaquest.actors.Ground;
+import com.fullsail.djones.android.ninjaquest.actors.PauseButton;
 import com.fullsail.djones.android.ninjaquest.actors.Score;
+import com.fullsail.djones.android.ninjaquest.actors.StartButton;
+import com.fullsail.djones.android.ninjaquest.enums.DifficultyLevel;
+import com.fullsail.djones.android.ninjaquest.enums.GameStates;
 import com.fullsail.djones.android.ninjaquest.utils.ActorUtils;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
+import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
 import com.fullsail.djones.android.ninjaquest.utils.WorldData;
 
 /**
@@ -72,6 +77,12 @@ public class GameStage extends Stage implements ContactListener{
     // For Score
     private Score score;
 
+    // Buttons
+    private StartButton startButton;
+    private PauseButton pauseButton;
+
+    private float timePlayed;
+
 
     // Constructor
     public GameStage() {
@@ -95,7 +106,11 @@ public class GameStage extends Stage implements ContactListener{
 
         setupCamera();
         createWorld();
+        //setupScoreDisplay();
+        displayStartButton();
         setupControls();
+        Gdx.input.setInputProcessor(this);
+        onGameOver();
 
         // For debugging
         /*
@@ -132,8 +147,8 @@ public class GameStage extends Stage implements ContactListener{
         world.setContactListener(this);
         setBackground();
         createGround();
-        setupDisplay();
-        createCharacters();
+        //setupScoreDisplay();
+        //createCharacters();
     }
 
     // Create the background
@@ -147,11 +162,6 @@ public class GameStage extends Stage implements ContactListener{
         addActor(ground);
     }
 
-    // Setup display
-    private void setupDisplay (){
-        setupScoreDisplay();
-    }
-
     // Create characters
     private void createCharacters(){
         createGoodNinja();
@@ -160,6 +170,9 @@ public class GameStage extends Stage implements ContactListener{
 
     // Create good ninja actor
     private void createGoodNinja() {
+        if (goodNinja != null) {
+            goodNinja.remove();
+        }
         goodNinja = new GoodNinja(WorldData.createGoodNinja(world));
         addActor(goodNinja);
     }
@@ -168,6 +181,13 @@ public class GameStage extends Stage implements ContactListener{
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if (GameManagement.getInstance().getCurrentState() == GameStates.PAUSED) return;
+
+        if (GameManagement.getInstance().getCurrentState() == GameStates.RUNNING) {
+            timePlayed += delta;
+            increaseDifficulty();
+        }
 
         // Create an array of bodies with count equal to bodies in world
         Array<Body> enemies = new Array<Body>(world.getBodyCount());
@@ -200,6 +220,7 @@ public class GameStage extends Stage implements ContactListener{
     // create a new bad guy
     private void makeBadGuy() {
         Baddie baddie = new Baddie(WorldData.createBaddie(world));
+        baddie.getUserData().setVelocity(GameManagement.getInstance().getDifficulty().getEnemyVelocity());
         addActor(baddie);
     }
 
@@ -229,6 +250,14 @@ public class GameStage extends Stage implements ContactListener{
         // get coordinates of touch point
         getCoordinates(x, y);
 
+        if (buttonPressed(touchPoint.x, touchPoint.y)) {
+            return super.touchDown(x, y, pointer, button);
+        }
+
+        if (GameManagement.getInstance().getCurrentState() != GameStates.RUNNING) {
+            return super.touchDown(x, y, pointer, button);
+        }
+
         // ninja jumps if screen is touched on right side
         if (screenRightTouched(touchPoint.x, touchPoint.y)){
             goodNinja.ninjaJump();
@@ -246,6 +275,11 @@ public class GameStage extends Stage implements ContactListener{
     // stop sliding when user stops pressing left side of screen
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button){
+
+        if (GameManagement.getInstance().getCurrentState() != GameStates.RUNNING) {
+            return super.touchUp(screenX, screenY, pointer, button);
+        }
+
         if (goodNinja.isNinjaSliding()) {
             goodNinja.stopSliding();
         }
@@ -265,6 +299,19 @@ public class GameStage extends Stage implements ContactListener{
         getCamera().unproject(touchPoint.set(x,y, 0));
     }
 
+    private boolean buttonPressed(float x, float y){
+        boolean buttonPressed = false;
+
+        switch (GameManagement.getInstance().getCurrentState()) {
+            case OVER:
+                buttonPressed = startButton.getButtonBounds().contains(x, y);
+                break;
+            case RUNNING:
+            case PAUSED:
+        }
+        return buttonPressed;
+    }
+
     // Method to handle collisions
     @Override
     public void beginContact(Contact contact) {
@@ -280,6 +327,7 @@ public class GameStage extends Stage implements ContactListener{
             }
             goodNinja.collision();
             hitSound.play();
+            onGameOver();
         }
 
         // If good ninja hits ground
@@ -293,7 +341,75 @@ public class GameStage extends Stage implements ContactListener{
 
     }
 
-    @Override
+    // Display the start button
+    private void displayStartButton() {
+        Rectangle startButtonBounds = new Rectangle(getCamera().viewportWidth * 3 / 16,
+                getCamera().viewportHeight / 4, getCamera().viewportWidth / 4, getCamera().viewportHeight / 4);
+        startButton = new StartButton(startButtonBounds, new StartButton.StartButtonListener() {
+            @Override
+            public void onStart() {
+                clear();
+                createWorld();
+                setupScoreDisplay();
+                createCharacters();
+                displayPauseButton();
+                onResumeGame();
+            }
+        });
+        addActor(startButton);
+    }
+
+    // Display the pause button
+    private void displayPauseButton() {
+        Rectangle pauseBounds = new Rectangle(getCamera().viewportWidth / 64, getCamera().viewportHeight * 1 / 2,
+                getCamera().viewportWidth / 10, getCamera().viewportHeight / 10);
+        pauseButton = new PauseButton(pauseBounds, new PauseButton.PauseListener() {
+            @Override
+            public void onPause() {
+                onPauseGame();
+            }
+
+            @Override
+            public void onResume() {
+                onResumeGame();
+            }
+        });
+        addActor(pauseButton);
+    }
+
+    private void onResumeGame() {
+        GameManagement.getInstance().setCurrentState(GameStates.RUNNING);
+    }
+
+    private void onPauseGame() {
+        GameManagement.getInstance().setCurrentState(GameStates.PAUSED);
+    }
+
+    private void onGameOver() {
+        GameManagement.getInstance().setCurrentState(GameStates.OVER);
+        GameManagement.getInstance().resetDifficultyLevel();
+        timePlayed = 0;
+        displayStartButton();
+    }
+
+    // method to increase game difficulty over time
+    private void increaseDifficulty() {
+        if (GameManagement.getInstance().atMaxDifficulty()) {
+            return;
+        }
+
+        DifficultyLevel difficultyLevel = GameManagement.getInstance().getDifficulty();
+
+        if (timePlayed > GameManagement.getInstance().getDifficulty().getLevel() * 5) {
+            int nextLevel = difficultyLevel.getLevel() + 1;
+            String difficultyName = "DIFFICULTY_" + nextLevel;
+            GameManagement.getInstance().setDifficulty(DifficultyLevel.valueOf(difficultyName));
+
+            goodNinja.onLevelChange(GameManagement.getInstance().getDifficulty());
+            score.setMultiplierAmount(GameManagement.getInstance().getDifficulty().getScoreIncrementMultiplier());
+        }
+    }
+
     public void endContact(Contact contact) {
 
     }

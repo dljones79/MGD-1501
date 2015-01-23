@@ -70,4 +70,8 @@ public class Constants {
 
     // Fonts
     public static final String FONT_PATH = "shoguns_clan.ttf";
+
+    // Buttons
+    public static final String PLAY_BUTTON_NAME = "start_button";
+    public static final String PAUSE_BUTTON_NAME = "pause_button";
 }

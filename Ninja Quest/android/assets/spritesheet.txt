@@ -184,3 +184,17 @@ ninjaCat_slide2
   orig: 168, 151
   offset: 30, 5
   index: -1
+pause_button
+  rotate: false
+  xy: 2, 1538
+  size: 100, 100
+  orig: 128, 128
+  offset: 14, 14
+  index: -1
+start_button
+  rotate: false
+  xy: 104, 1538
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
