@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.fullsail.djones.android.ninjaquest.box2d.GoodNinjaData;
 import com.fullsail.djones.android.ninjaquest.enums.DifficultyLevel;
+import com.fullsail.djones.android.ninjaquest.enums.GameStates;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
+import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
 
 /**
  * Created by David Jones on 1/14/15.
@@ -136,11 +138,15 @@ public class GoodNinja extends GameActor {
                     onScreenRect.height * 0.5f, onScreenRect.width, onScreenRect.height, 1f, 1f,
                     (float) Math.toDegrees(actorBody.getAngle()));
         } else if (ninjaJumping) {
-            stateTime += Gdx.graphics.getDeltaTime();
+            if (GameManagement.getInstance().getCurrentState() == GameStates.RUNNING) {
+                stateTime += Gdx.graphics.getDeltaTime();
+            }
             batch.draw(jumpAnimation.getKeyFrame(stateTime, true), onScreenRect.x, onScreenRect.y,
                     onScreenRect.getWidth(), onScreenRect.getHeight());
         } else {
-            stateTime += Gdx.graphics.getDeltaTime();
+            if (GameManagement.getInstance().getCurrentState() == GameStates.RUNNING) {
+                stateTime += Gdx.graphics.getDeltaTime();
+            }
             batch.draw(runAnimation.getKeyFrame(stateTime, true), onScreenRect.x, onScreenRect.y,
                     onScreenRect.getWidth(), onScreenRect.getHeight());
         }

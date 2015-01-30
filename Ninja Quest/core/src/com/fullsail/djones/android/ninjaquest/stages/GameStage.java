@@ -21,6 +21,7 @@ import com.fullsail.djones.android.ninjaquest.actors.AboutButton;
 import com.fullsail.djones.android.ninjaquest.actors.AboutText;
 import com.fullsail.djones.android.ninjaquest.actors.Background;
 import com.fullsail.djones.android.ninjaquest.actors.Baddie;
+import com.fullsail.djones.android.ninjaquest.actors.GameOverLabel;
 import com.fullsail.djones.android.ninjaquest.actors.GameTitle;
 import com.fullsail.djones.android.ninjaquest.actors.GoodNinja;
 import com.fullsail.djones.android.ninjaquest.actors.Ground;
@@ -134,6 +135,13 @@ public class GameStage extends Stage implements ContactListener{
         Rectangle titleBounds = new Rectangle(0, getCamera().viewportHeight * 7 / 8,
                 getCamera().viewportWidth, getCamera().viewportHeight / 4);
         addActor(new GameTitle(titleBounds));
+    }
+
+    // Display Game over
+    private void displayGameOver() {
+        Rectangle labelBounds = new Rectangle(0, getCamera().viewportHeight * 7 / 8,
+                getCamera().viewportWidth, getCamera().viewportHeight / 4);
+        addActor(new GameOverLabel(labelBounds));
     }
 
     // Show menu
@@ -491,6 +499,7 @@ public class GameStage extends Stage implements ContactListener{
         GameManagement.getInstance().resetDifficultyLevel();
         timePlayed = 0;
         displayMainMenu();
+        displayGameOver();
     }
 
     private void onAboutButton() {

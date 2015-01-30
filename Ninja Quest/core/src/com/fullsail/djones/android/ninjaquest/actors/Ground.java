@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.fullsail.djones.android.ninjaquest.box2d.GroundData;
+import com.fullsail.djones.android.ninjaquest.enums.GameStates;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
+import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
 
 /**
  * Created by David Jones on 1/14/15.
@@ -38,6 +40,9 @@ public class Ground extends GameActor {
     public void act(float delta){
         super.act(delta);
 
+        if (GameManagement.getInstance().getCurrentState() != GameStates.RUNNING){
+            return;
+        }
         if (leftSideReached(delta)) {
             resetBounds();
         } else {

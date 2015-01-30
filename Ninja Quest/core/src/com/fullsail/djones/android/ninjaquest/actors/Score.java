@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.fullsail.djones.android.ninjaquest.enums.GameStates;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
+import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
 
 /**
  * Created by David on 1/17/15.
@@ -33,6 +35,9 @@ public class Score extends Actor {
     public void act (float delta) {
         super.act(delta);
 
+        if (GameManagement.getInstance().getCurrentState() != GameStates.RUNNING){
+            return;
+        }
         scoreStreak += multiplierAmount * delta;
     }
 

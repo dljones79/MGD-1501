@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.fullsail.djones.android.ninjaquest.enums.GameStates;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
+import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
 
 /**
  * Created by David Jones on 1/14/15.
@@ -42,6 +44,9 @@ public class Background extends Actor {
     @Override
     public void act(float delta){
 
+        if (GameManagement.getInstance().getCurrentState() != GameStates.RUNNING){
+            return;
+        }
         // When image hits left side of screen
         // we reset the bounds for the image
         if (leftSideReached(delta)) {

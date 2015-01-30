@@ -78,6 +78,7 @@ public class Constants {
 
     // Game Name
     public static final String GAME_TITLE = "Ninja Quest";
+    public static final String GAME_OVER = "GAME OVER!";
 
     // Instructions
     public static final String INSTRUCTION_LEFT = "\nTap left to slide.";

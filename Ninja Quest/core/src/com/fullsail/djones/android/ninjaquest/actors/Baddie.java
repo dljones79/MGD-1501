@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.fullsail.djones.android.ninjaquest.box2d.EnemyData;
+import com.fullsail.djones.android.ninjaquest.enums.GameStates;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
+import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
 
 /**
  * Created by David Jones on 1/15/15.
@@ -37,7 +39,9 @@ public class Baddie extends GameActor {
     public void draw(Batch batch, float parentAlpha){
         super.draw(batch, parentAlpha);
 
-        stateTime += Gdx.graphics.getDeltaTime();
+        if (GameManagement.getInstance().getCurrentState() != GameStates.PAUSED) {
+            stateTime += Gdx.graphics.getDeltaTime();
+        }
         batch.draw(enemyAnimation.getKeyFrame(stateTime, true),(onScreenRect.x - (onScreenRect.width * 0.1f)),
                 onScreenRect.y, onScreenRect.width * 1.2f, onScreenRect.height * 1.1f);
     }
