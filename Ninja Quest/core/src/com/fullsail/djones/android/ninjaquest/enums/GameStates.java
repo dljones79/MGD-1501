@@ -7,6 +7,8 @@ public enum GameStates {
 
     RUNNING,
     PAUSED,
-    OVER
+    OVER,
+    ABOUT,
+    INSTRUCTIONS
 
 }

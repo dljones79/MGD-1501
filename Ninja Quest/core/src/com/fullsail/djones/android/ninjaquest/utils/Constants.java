@@ -74,4 +74,20 @@ public class Constants {
     // Buttons
     public static final String PLAY_BUTTON_NAME = "start_button";
     public static final String PAUSE_BUTTON_NAME = "pause_button";
+    public static final String INSTRUCTIONS_BUTTON_NAME = "instructions";
+
+    // Game Name
+    public static final String GAME_TITLE = "Ninja Quest";
+
+    // Instructions
+    public static final String INSTRUCTION_LEFT = "\nTap left to slide.";
+    public static final String INSTRUCTION_RIGHT = "\nTap right to jump.";
+    public static final String INSTRUCTION_LEFT_NAME = "tap";
+    public static final String INSTRUCTION_RIGHT_NAME = "tap";
+
+    // About Screen
+    public static final String DISMISS_REGION_NAME = "dismiss";
+    public static final String ABOUT_NAME = "about";
+    public static final String ABOUT_TEXT = "Developed by: David Jones\nFor: Mobile Game Design 1501\n" +
+            "Full Sail University\n Enemy Graphics: ramtam\nSound Effects: David Jones";
 }

@@ -17,10 +17,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.fullsail.djones.android.ninjaquest.actors.AboutButton;
+import com.fullsail.djones.android.ninjaquest.actors.AboutText;
 import com.fullsail.djones.android.ninjaquest.actors.Background;
 import com.fullsail.djones.android.ninjaquest.actors.Baddie;
+import com.fullsail.djones.android.ninjaquest.actors.GameTitle;
 import com.fullsail.djones.android.ninjaquest.actors.GoodNinja;
 import com.fullsail.djones.android.ninjaquest.actors.Ground;
+import com.fullsail.djones.android.ninjaquest.actors.Instructions;
+import com.fullsail.djones.android.ninjaquest.actors.InstructionsButton;
 import com.fullsail.djones.android.ninjaquest.actors.PauseButton;
 import com.fullsail.djones.android.ninjaquest.actors.Score;
 import com.fullsail.djones.android.ninjaquest.actors.StartButton;
@@ -80,8 +85,12 @@ public class GameStage extends Stage implements ContactListener{
     // Buttons
     private StartButton startButton;
     private PauseButton pauseButton;
+    private AboutButton aboutButton;
+    private InstructionsButton instructionsButton;
+
 
     private float timePlayed;
+    private boolean instructionsDisplayed;
 
 
     // Constructor
@@ -106,8 +115,8 @@ public class GameStage extends Stage implements ContactListener{
 
         setupCamera();
         createWorld();
-        //setupScoreDisplay();
-        displayStartButton();
+        displayMainMenu();
+        displayTitle();
         setupControls();
         Gdx.input.setInputProcessor(this);
         onGameOver();
@@ -117,8 +126,21 @@ public class GameStage extends Stage implements ContactListener{
         renderer = new Box2DDebugRenderer();
         */
 
-        //TODO: Add Start and Pause Buttons
         //TODO: Handle game over.
+    }
+
+    // Display game title
+    private void displayTitle() {
+        Rectangle titleBounds = new Rectangle(0, getCamera().viewportHeight * 7 / 8,
+                getCamera().viewportWidth, getCamera().viewportHeight / 4);
+        addActor(new GameTitle(titleBounds));
+    }
+
+    // Show menu
+    private void displayMainMenu() {
+        displayStartButton();
+        displayAboutButton();
+        displayInstructionsButton();
     }
 
     // Set up Score Display
@@ -304,10 +326,13 @@ public class GameStage extends Stage implements ContactListener{
 
         switch (GameManagement.getInstance().getCurrentState()) {
             case OVER:
-                buttonPressed = startButton.getButtonBounds().contains(x, y);
+                buttonPressed = startButton.getButtonBounds().contains(x, y)
+                    || aboutButton.getButtonBounds().contains(x, y);
                 break;
             case RUNNING:
             case PAUSED:
+                buttonPressed = pauseButton.getButtonBounds().contains(x, y);
+                break;
         }
         return buttonPressed;
     }
@@ -377,6 +402,82 @@ public class GameStage extends Stage implements ContactListener{
         addActor(pauseButton);
     }
 
+    // Display about button
+    private void displayAboutButton() {
+        Rectangle aboutBounds = new Rectangle(getCamera().viewportWidth * 23 / 25,
+                getCamera().viewportHeight * 13 / 20, getCamera().viewportHeight / 10,
+                getCamera().viewportHeight / 10);
+        aboutButton = new AboutButton(aboutBounds, new AboutButton.AboutListener() {
+            @Override
+            public void onAbout() {
+                if (GameManagement.getInstance().getCurrentState() == GameStates.OVER){
+                    onAboutButton();
+                } else {
+                    clear();
+                    createWorld();
+                    displayTitle();
+                    onGameOver();
+                }
+            }
+        });
+        addActor(aboutButton);
+    }
+
+    // Display instructions button
+    private void displayInstructionsButton() {
+        Rectangle instructionBounds = new Rectangle(getCamera().viewportWidth * 23 / 25,
+                getCamera().viewportHeight / 2, getCamera().viewportWidth / 15, getCamera().viewportWidth / 15);
+        instructionsButton = new InstructionsButton(instructionBounds, new InstructionsButton.InstructionsButtonListener() {
+            @Override
+            public void onInstruct() {
+                if (GameManagement.getInstance().getCurrentState() == GameStates.OVER){
+                    onInstructionsButton();
+                } else {
+                    clear();
+                    createWorld();
+                    displayTitle();
+                    onGameOver();
+                }
+            }
+        });
+        addActor(instructionsButton);
+    }
+
+    // Set up about text
+    private void createAboutInfo() {
+        Rectangle labelBounds = new Rectangle(0, getCamera().viewportHeight * 5 / 8,
+                getCamera().viewportWidth, getCamera().viewportHeight / 4);
+        addActor(new AboutText(labelBounds));
+    }
+
+    // Set up instructions
+    private void displayInstructions() {
+        if (instructionsDisplayed){
+            return;
+        }
+
+        createLeftInstructions();
+        createRightInstructions();
+
+        instructionsDisplayed = true;
+    }
+
+    // Left Instructions
+    private void createLeftInstructions(){
+        float width = getCamera().viewportHeight / 4;
+        float xLeft = getCamera().viewportWidth / 4 - width / 2;
+        Rectangle leftBounds = new Rectangle(xLeft, getCamera().viewportHeight * 9 / 20, width, width);
+        addActor(new Instructions(leftBounds, Constants.INSTRUCTION_LEFT_NAME, Constants.INSTRUCTION_LEFT));
+    }
+
+    // Right Instructions
+    private void createRightInstructions(){
+        float width = getCamera().viewportHeight / 4;
+        float xRight = getCamera().viewportWidth * 3 / 4 - width / 2;
+        Rectangle rightBounds = new Rectangle(xRight, getCamera().viewportHeight * 9 / 20, width, width);
+        addActor(new Instructions(rightBounds, Constants.INSTRUCTION_RIGHT_NAME, Constants.INSTRUCTION_RIGHT));
+    }
+
     private void onResumeGame() {
         GameManagement.getInstance().setCurrentState(GameStates.RUNNING);
     }
@@ -389,7 +490,25 @@ public class GameStage extends Stage implements ContactListener{
         GameManagement.getInstance().setCurrentState(GameStates.OVER);
         GameManagement.getInstance().resetDifficultyLevel();
         timePlayed = 0;
-        displayStartButton();
+        displayMainMenu();
+    }
+
+    private void onAboutButton() {
+        GameManagement.getInstance().setCurrentState(GameStates.ABOUT);
+        clear();
+        createWorld();
+        displayTitle();
+        createAboutInfo();
+        displayAboutButton();
+    }
+
+    private void onInstructionsButton() {
+        GameManagement.getInstance().setCurrentState(GameStates.INSTRUCTIONS);
+        clear();
+        createWorld();
+        displayTitle();
+        displayInstructions();
+        displayInstructionsButton();
     }
 
     // method to increase game difficulty over time

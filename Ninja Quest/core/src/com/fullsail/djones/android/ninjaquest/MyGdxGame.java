@@ -6,6 +6,8 @@
 package com.fullsail.djones.android.ninjaquest;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.fullsail.djones.android.ninjaquest.screens.SplashScreen;
 
 /**
  * David Jones
@@ -13,6 +15,9 @@ import com.badlogic.gdx.Game;
  * Full Sail University
  */
 public class MyGdxGame extends Game {
+
+    public static int WIDTH;
+    public static int HEIGHT;
 
     // Declarations below were used in first turn in
     // Not needed for new design
@@ -37,8 +42,13 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 
+        WIDTH = Gdx.graphics.getWidth();
+        HEIGHT = Gdx.graphics.getHeight();
+
+        setScreen(new SplashScreen(this));
+
         // Set the screen to our new GameScreen.
-        setScreen(new GameScreen());
+        //setScreen(new GameScreen());
 
 
 
