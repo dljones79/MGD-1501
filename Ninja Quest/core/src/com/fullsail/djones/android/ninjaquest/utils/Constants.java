@@ -42,12 +42,19 @@ public class Constants {
     public static final String GROUND_IMG = "ground.png";
 
     // Constants for enemies
-    public static final float ENEMY_X = 25f;
+    public static final float ENEMY_X = 40f;
     public static final float ENEMY_DENSITY = GOODNINJA_DENSITY;
     public static final float STANDING_NINJA_Y = 1.5f;
     public static final float FLYING_EYE_Y = 3f;
     public static final float BLUE_CREATURE_Y = 2f;
     public static final Vector2 ENEMY_VELOCITY = new Vector2(-11f, 0);
+
+    // Constants for collection item
+    public static final float COLLECTION_X = 55F;
+    public static final float COLLECTION_DENSITY = 0.1f;
+    public static final float GROUND_COLLECTION_Y = 1.5f;
+    public static final float FLOATING_COLLECTION = 4f;
+    public static final Vector2 COLLECTION_VELOCITY = new Vector2(-10f, 0);
 
     // Textures for sprites
     public static final String ATLAS_PATH = "spritesheet.txt";
@@ -67,6 +74,8 @@ public class Constants {
             "blue_creature1", "blue_creature2", "blue_creature3", "blue_creature4"};
     public static final String[] FLYING_EYE = new String [] {
             "flying_eye1", "flying_eye2", "flying_eye3", "flying_eye4"};
+    public static final String[] COLLECTION = new String[] {
+            "sushi1", "sushi2", "sushi3"};
 
     // Fonts
     public static final String FONT_PATH = "shoguns_clan.ttf";

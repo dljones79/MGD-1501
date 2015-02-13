@@ -8,5 +8,6 @@ package com.fullsail.djones.android.ninjaquest.enums;
 public enum DataTypes {
     GROUND,
     GOODNINJA,
-    ENEMY
+    ENEMY,
+    COLLECTION
 }

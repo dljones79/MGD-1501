@@ -40,8 +40,17 @@ public class ActorUtils {
             case GOODNINJA:
             case ENEMY:
                 return body.getPosition().x + userData.getWidth() / 2 > 0;
+            case COLLECTION:
+                return body.getPosition().x + userData.getWidth() / 2 > 0;
         }
 
         return true;
     }
+
+    public static boolean bodyIsCollection(Body body) {
+        UserData userData = (UserData) body.getUserData();
+
+        return userData != null && userData.getDataType() == DataTypes.COLLECTION;
+    }
+
 }

@@ -219,9 +219,30 @@ start_button
   orig: 150, 150
   offset: 0, 0
   index: -1
-tap
+sushi1
   rotate: false
   xy: 2, 930
+  size: 62, 44
+  orig: 70, 47
+  offset: 4, 1
+  index: -1
+sushi2
+  rotate: false
+  xy: 66, 930
+  size: 62, 42
+  orig: 70, 47
+  offset: 4, 1
+  index: -1
+sushi3
+  rotate: false
+  xy: 130, 930
+  size: 61, 44
+  orig: 70, 47
+  offset: 3, 0
+  index: -1
+tap
+  rotate: false
+  xy: 2, 976
   size: 400, 400
   orig: 400, 400
   offset: 0, 0

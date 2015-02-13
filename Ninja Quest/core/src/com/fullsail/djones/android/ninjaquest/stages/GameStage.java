@@ -21,6 +21,8 @@ import com.fullsail.djones.android.ninjaquest.actors.AboutButton;
 import com.fullsail.djones.android.ninjaquest.actors.AboutText;
 import com.fullsail.djones.android.ninjaquest.actors.Background;
 import com.fullsail.djones.android.ninjaquest.actors.Baddie;
+import com.fullsail.djones.android.ninjaquest.actors.CollectionAmount;
+import com.fullsail.djones.android.ninjaquest.actors.CollectionItem;
 import com.fullsail.djones.android.ninjaquest.actors.GameOverLabel;
 import com.fullsail.djones.android.ninjaquest.actors.GameTitle;
 import com.fullsail.djones.android.ninjaquest.actors.GoodNinja;
@@ -36,6 +38,7 @@ import com.fullsail.djones.android.ninjaquest.utils.ActorUtils;
 import com.fullsail.djones.android.ninjaquest.utils.Constants;
 import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
 import com.fullsail.djones.android.ninjaquest.utils.WorldData;
+
 
 /**
  * Created by David Jones on 1/14/15.
@@ -58,6 +61,7 @@ public class GameStage extends Stage implements ContactListener{
     private World world;          // box2D World object
     private Ground ground;        // Custom Java Class Object
     private GoodNinja goodNinja;  // Custom Java Class Object
+    private CollectionItem collectionItem;
 
     // Time for movement
     private final float TIME_STEP = 1 / 300f;
@@ -79,9 +83,11 @@ public class GameStage extends Stage implements ContactListener{
     private Sound landSound;
     private Sound hitSound;
     private Music backgroundMusic;
+    private Sound dingSound;
 
     // For Score
     private Score score;
+    private CollectionAmount collectionAmount;
 
     // Buttons
     private StartButton startButton;
@@ -92,6 +98,7 @@ public class GameStage extends Stage implements ContactListener{
 
     private float timePlayed;
     private boolean instructionsDisplayed;
+    private int quantity;
 
 
     // Constructor
@@ -106,6 +113,7 @@ public class GameStage extends Stage implements ContactListener{
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("jumping.wav"));
         landSound = Gdx.audio.newSound(Gdx.files.internal("thud.wav"));
         hitSound = Gdx.audio.newSound(Gdx.files.internal("punch_response.wav"));
+        dingSound = Gdx.audio.newSound(Gdx.files.internal("ding.wav"));
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("background_music.mp3"));
 
         // start music
@@ -113,6 +121,7 @@ public class GameStage extends Stage implements ContactListener{
         backgroundMusic.setVolume(0.5f);
         backgroundMusic.play();
 
+        quantity = 0;
 
         setupCamera();
         createWorld();
@@ -149,6 +158,7 @@ public class GameStage extends Stage implements ContactListener{
         displayStartButton();
         displayAboutButton();
         displayInstructionsButton();
+        setupItemQuantityDisplay();
     }
 
     // Set up Score Display
@@ -160,6 +170,15 @@ public class GameStage extends Stage implements ContactListener{
         addActor(score);
     }
 
+    // Set up item quantity Display
+    private void setupItemQuantityDisplay() {
+        Rectangle bounds = new Rectangle(getCamera().viewportWidth * 47 / 64,
+                getCamera().viewportHeight * 50 / 64, getCamera().viewportWidth / 4,
+                getCamera().viewportHeight / 7);
+        collectionAmount = new CollectionAmount(bounds);
+        addActor(collectionAmount);
+    }
+
 
     // Set up camera
     private void setupCamera() {
@@ -169,9 +188,6 @@ public class GameStage extends Stage implements ContactListener{
     }
 
     // Custom method to build new world
-    // Call methods to create ground and ninja
-    // Make Bad Guys
-    // Handle contacts
     private void createWorld() {
         world = WorldData.buildWorld();
         world.setContactListener(this);
@@ -196,6 +212,7 @@ public class GameStage extends Stage implements ContactListener{
     private void createCharacters(){
         createGoodNinja();
         makeBadGuy();
+        makeCollectionItem();
     }
 
     // Create good ninja actor
@@ -243,6 +260,9 @@ public class GameStage extends Stage implements ContactListener{
             if (ActorUtils.bodyIsBaddie(body) && !goodNinja.didCollide()) {
                 makeBadGuy();
             }
+            if (ActorUtils.bodyIsCollection(body)){
+                makeCollectionItem();
+            }
             world.destroyBody(body);
         }
     }
@@ -252,6 +272,13 @@ public class GameStage extends Stage implements ContactListener{
         Baddie baddie = new Baddie(WorldData.createBaddie(world));
         baddie.getUserData().setVelocity(GameManagement.getInstance().getDifficulty().getEnemyVelocity());
         addActor(baddie);
+    }
+
+    // create a new collection item
+    private void makeCollectionItem() {
+        CollectionItem collectionItem = new CollectionItem(WorldData.createCollection(world));
+        collectionItem.getUserData().setVelocity(GameManagement.getInstance().getDifficulty().getEnemyVelocity());
+        addActor(collectionItem);
     }
 
     // For debugging with rectangles
@@ -363,6 +390,15 @@ public class GameStage extends Stage implements ContactListener{
             onGameOver();
         }
 
+        // If good ninja hits collection item
+        if ((ActorUtils.bodyIsGoodNinja(bodyA) && ActorUtils.bodyIsCollection(bodyB))){
+            world.destroyBody(bodyB);
+            goodNinja.collectionCollision();
+            quantity = (quantity + 1);
+            collectionAmount.setQuantity(quantity);
+            dingSound.play();
+        }
+
         // If good ninja hits ground
         // GoodNinja landed
         // Sound played
@@ -387,6 +423,7 @@ public class GameStage extends Stage implements ContactListener{
                 createCharacters();
                 displayPauseButton();
                 onResumeGame();
+                setupItemQuantityDisplay();
             }
         });
         addActor(startButton);

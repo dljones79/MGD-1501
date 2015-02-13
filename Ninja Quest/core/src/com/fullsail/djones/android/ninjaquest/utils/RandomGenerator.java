@@ -1,5 +1,6 @@
 package com.fullsail.djones.android.ninjaquest.utils;
 
+import com.fullsail.djones.android.ninjaquest.enums.CollectionDataTypes;
 import com.fullsail.djones.android.ninjaquest.enums.EnemyDataTypes;
 
 import java.util.Random;
@@ -18,6 +19,12 @@ public class RandomGenerator {
         RandomEnum<EnemyDataTypes> randomEnum = new RandomEnum<EnemyDataTypes>(EnemyDataTypes.class);
         return randomEnum.random();
     }
+
+    public static CollectionDataTypes getNewCollection() {
+        RandomEnum<CollectionDataTypes> randomEnum = new RandomEnum<CollectionDataTypes>(CollectionDataTypes.class);
+        return randomEnum.random();
+    }
+
 
     private static class RandomEnum<E extends Enum> {
 

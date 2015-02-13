@@ -5,9 +5,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.fullsail.djones.android.ninjaquest.box2d.CollectionData;
 import com.fullsail.djones.android.ninjaquest.box2d.EnemyData;
 import com.fullsail.djones.android.ninjaquest.box2d.GoodNinjaData;
 import com.fullsail.djones.android.ninjaquest.box2d.GroundData;
+import com.fullsail.djones.android.ninjaquest.enums.CollectionDataTypes;
 import com.fullsail.djones.android.ninjaquest.enums.EnemyDataTypes;
 
 
@@ -111,6 +113,43 @@ public class WorldData {
 
         // Dispose of polygon shape
         polygonShape.dispose();
+        return body;
+    }
+
+    public static Body createCollection(World world){
+
+        // Create instance of CollectionDataTypes class
+        // Run random enum generator
+        CollectionDataTypes collectionDataTypes = RandomGenerator.getNewCollection();
+
+        // Create body definition for new collection
+        BodyDef bodyDef = new BodyDef();
+
+        // Set body to kinematic
+        // Set position
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.position.set(new Vector2(collectionDataTypes.getX(), collectionDataTypes.getY()));
+
+        // Create polygon shape for collection
+        // Set size according to collection proportions
+        PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(collectionDataTypes.getWidth() / 2, collectionDataTypes.getHeight() / 2);
+
+        // Create rigid collection body according to body def
+        // Create fixture for new collection and set density
+        // reset mass data for collection
+        Body body = world.createBody(bodyDef);
+        body.createFixture(polygonShape, collectionDataTypes.getDensity());
+        body.resetMassData();
+
+        // Set data type to CollectionData
+        CollectionData collectionData = new CollectionData(collectionDataTypes.getWidth(), collectionDataTypes.getHeight(),
+                collectionDataTypes.getRegions());
+        body.setUserData(collectionData);
+
+        // Dispose of polygon shape
+        polygonShape.dispose();
+
         return body;
     }
 }

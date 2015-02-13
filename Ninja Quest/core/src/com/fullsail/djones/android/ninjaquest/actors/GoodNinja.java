@@ -27,6 +27,9 @@ public class GoodNinja extends GameActor {
     // Bool to cenvey if ninja hit an enemy
     private boolean ninjaCollision;
 
+    // Bool for collection
+    private boolean ninjaCollection;
+
     // Textures
     private Animation runAnimation;
     private Animation jumpAnimation;
@@ -116,10 +119,18 @@ public class GoodNinja extends GameActor {
         ninjaCollision = true;
     }
 
+    // check to see if ninja collided with collection
+    public void collectionCollision() {
+        ninjaCollection = true;
+    }
+
     // bool to tell if ninja hit a bad guy
     public boolean didCollide() {
         return ninjaCollision;
     }
+
+    // bool to tell if ninja hit collection
+    public boolean didCollect() { return ninjaCollection; }
 
     @Override
     public void draw(Batch batch, float parentAlpah) {
