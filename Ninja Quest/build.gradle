@@ -31,7 +31,9 @@ allprojects {
 project(":android") {
     apply plugin: "android"
 
-    configurations { natives }
+    configurations {
+        natives
+    }
 
     dependencies {
         compile project(":core")
@@ -55,6 +57,8 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile "com.android.support:appcompat-v7:21.0.3"
+        compile "com.google.android.gms:play-services:6.5.87"
     }
 }
 
