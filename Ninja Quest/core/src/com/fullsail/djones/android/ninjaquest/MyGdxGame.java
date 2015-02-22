@@ -8,6 +8,10 @@ package com.fullsail.djones.android.ninjaquest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.fullsail.djones.android.ninjaquest.screens.SplashScreen;
+import com.fullsail.djones.android.ninjaquest.utils.AssetManagement;
+import com.fullsail.djones.android.ninjaquest.utils.EventListener;
+import com.fullsail.djones.android.ninjaquest.utils.GameManagement;
+
 
 /**
  * David Jones
@@ -38,6 +42,10 @@ public class MyGdxGame extends Game {
     private Rectangle badNinjaRec;
     private Rectangle princessRec;
 	*/
+
+    public MyGdxGame(EventListener listener){
+        GameManagement.getInstance().setEventListener(listener);
+    }
 
 	@Override
 	public void create () {
@@ -140,6 +148,10 @@ public class MyGdxGame extends Game {
         */
 	} // end create method
 
-
+    @Override
+    public void dispose() {
+        super.dispose();
+        AssetManagement.dispose();
+    }
 }
 

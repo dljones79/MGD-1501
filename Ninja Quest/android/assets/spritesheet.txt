@@ -107,142 +107,156 @@ instructions
   orig: 121, 121
   offset: 5, 2
   index: -1
-ninjaCat_hit
+leaderboard
   rotate: false
   xy: 179, 245
+  size: 121, 121
+  orig: 121, 121
+  offset: 0, 0
+  index: -1
+ninjaCat_hit
+  rotate: false
+  xy: 302, 245
   size: 120, 107
   orig: 140, 124
   offset: 17, 8
   index: -1
 ninjaCat_jump1
   rotate: false
-  xy: 301, 245
+  xy: 2, 368
   size: 120, 124
   orig: 141, 148
   offset: 5, 14
   index: -1
 ninjaCat_jump2
   rotate: false
-  xy: 2, 371
+  xy: 124, 368
   size: 123, 135
   orig: 155, 148
   offset: 15, 10
   index: -1
 ninjaCat_jump3
   rotate: false
-  xy: 127, 371
+  xy: 249, 368
   size: 131, 128
   orig: 159, 148
   offset: 14, 10
   index: -1
 ninjaCat_jump4
   rotate: false
-  xy: 260, 371
+  xy: 2, 505
   size: 130, 128
   orig: 153, 148
   offset: 14, 10
   index: -1
 ninjaCat_jump5
   rotate: false
-  xy: 2, 508
+  xy: 134, 505
   size: 131, 127
   orig: 168, 148
   offset: 24, 8
   index: -1
 ninjaCat_jump6
   rotate: false
-  xy: 135, 508
+  xy: 267, 505
   size: 131, 130
   orig: 177, 174
   offset: 23, 17
   index: -1
 ninjaCat_run1
   rotate: false
-  xy: 268, 508
+  xy: 2, 637
   size: 121, 128
   orig: 144, 164
   offset: 15, 23
   index: -1
 ninjaCat_run2
   rotate: false
-  xy: 2, 640
+  xy: 125, 637
   size: 127, 133
   orig: 147, 164
   offset: 10, 17
   index: -1
 ninjaCat_run3
   rotate: false
-  xy: 131, 640
+  xy: 254, 637
   size: 123, 132
   orig: 158, 164
   offset: 14, 29
   index: -1
 ninjaCat_run4
   rotate: false
-  xy: 256, 640
+  xy: 379, 637
   size: 131, 135
   orig: 154, 164
   offset: 12, 29
   index: -1
 ninjaCat_run5
   rotate: false
-  xy: 389, 640
+  xy: 2, 774
   size: 118, 136
   orig: 168, 164
   offset: 35, 20
   index: -1
 ninjaCat_slide1
   rotate: false
-  xy: 2, 778
+  xy: 122, 774
   size: 107, 123
   orig: 146, 123
   offset: 22, 0
   index: -1
 ninjaCat_slide2
   rotate: false
-  xy: 111, 778
+  xy: 231, 774
   size: 124, 146
   orig: 168, 151
   offset: 30, 5
   index: -1
 pause_button
   rotate: false
-  xy: 237, 778
+  xy: 357, 774
   size: 100, 100
   orig: 128, 128
   offset: 14, 14
   index: -1
+share
+  rotate: false
+  xy: 2, 922
+  size: 107, 107
+  orig: 121, 121
+  offset: 7, 7
+  index: -1
 start_button
   rotate: false
-  xy: 339, 778
+  xy: 111, 922
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 sushi1
   rotate: false
-  xy: 2, 930
+  xy: 263, 922
   size: 62, 44
   orig: 70, 47
   offset: 4, 1
   index: -1
 sushi2
   rotate: false
-  xy: 66, 930
+  xy: 327, 922
   size: 62, 42
   orig: 70, 47
   offset: 4, 1
   index: -1
 sushi3
   rotate: false
-  xy: 130, 930
+  xy: 391, 922
   size: 61, 44
   orig: 70, 47
   offset: 3, 0
   index: -1
 tap
   rotate: false
-  xy: 2, 976
+  xy: 2, 1074
   size: 400, 400
   orig: 400, 400
   offset: 0, 0

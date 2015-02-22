@@ -29,8 +29,10 @@ import com.fullsail.djones.android.ninjaquest.actors.GoodNinja;
 import com.fullsail.djones.android.ninjaquest.actors.Ground;
 import com.fullsail.djones.android.ninjaquest.actors.Instructions;
 import com.fullsail.djones.android.ninjaquest.actors.InstructionsButton;
+import com.fullsail.djones.android.ninjaquest.actors.LeaderboardButton;
 import com.fullsail.djones.android.ninjaquest.actors.PauseButton;
 import com.fullsail.djones.android.ninjaquest.actors.Score;
+import com.fullsail.djones.android.ninjaquest.actors.ShareButton;
 import com.fullsail.djones.android.ninjaquest.actors.StartButton;
 import com.fullsail.djones.android.ninjaquest.enums.DifficultyLevel;
 import com.fullsail.djones.android.ninjaquest.enums.GameStates;
@@ -46,7 +48,7 @@ import com.fullsail.djones.android.ninjaquest.utils.WorldData;
  * Full Sail University
  */
 
-public class GameStage extends Stage implements ContactListener{
+public class GameStage extends Stage implements ContactListener {
 
     // viewport measurements
     /* For Testing
@@ -94,12 +96,13 @@ public class GameStage extends Stage implements ContactListener{
     private PauseButton pauseButton;
     private AboutButton aboutButton;
     private InstructionsButton instructionsButton;
+    private LeaderboardButton leaderboardButton;
+    private ShareButton shareButton;
 
 
     private float timePlayed;
     private boolean instructionsDisplayed;
     private int quantity;
-
 
     // Constructor
     public GameStage() {
@@ -156,9 +159,24 @@ public class GameStage extends Stage implements ContactListener{
     // Show menu
     private void displayMainMenu() {
         displayStartButton();
+        createLeaderboard();
         displayAboutButton();
+        setupShareButton();
         displayInstructionsButton();
         setupItemQuantityDisplay();
+    }
+
+    // Set up share button
+    private void setupShareButton() {
+        Rectangle shareButtonBounds = new Rectangle(getCamera().viewportWidth / 64,
+                getCamera().viewportHeight / 2, getCamera().viewportHeight / 10,
+                getCamera().viewportHeight / 10);
+        shareButton = new ShareButton(shareButtonBounds, new ShareButton.ShareButtonListener() {
+            @Override
+            public void onShare() {
+                GameManagement.getInstance().share();
+            }
+        });
     }
 
     // Set up Score Display
@@ -353,7 +371,7 @@ public class GameStage extends Stage implements ContactListener{
 
     // custom method to get screen coordinates
     private void getCoordinates(int x, int y) {
-        getCamera().unproject(touchPoint.set(x,y, 0));
+        getCamera().unproject(touchPoint.set(x, y, 0));
     }
 
     private boolean buttonPressed(float x, float y){
@@ -362,6 +380,7 @@ public class GameStage extends Stage implements ContactListener{
         switch (GameManagement.getInstance().getCurrentState()) {
             case OVER:
                 buttonPressed = startButton.getButtonBounds().contains(x, y)
+                    || leaderboardButton.getButtonBounds().contains(x, y)
                     || aboutButton.getButtonBounds().contains(x, y);
                 break;
             case RUNNING:
@@ -387,6 +406,7 @@ public class GameStage extends Stage implements ContactListener{
             }
             goodNinja.collision();
             hitSound.play();
+            GameManagement.getInstance().submitScore(score.getScore());
             onGameOver();
         }
 
@@ -573,6 +593,20 @@ public class GameStage extends Stage implements ContactListener{
             goodNinja.onLevelChange(GameManagement.getInstance().getDifficulty());
             score.setMultiplierAmount(GameManagement.getInstance().getDifficulty().getScoreIncrementMultiplier());
         }
+    }
+
+    private void createLeaderboard() {
+        Rectangle leaderboardBounds = new Rectangle(getCamera().viewportWidth * 9 / 16,
+                getCamera().viewportHeight / 4, getCamera().viewportWidth / 4,
+                getCamera().viewportWidth / 4);
+        leaderboardButton = new LeaderboardButton(leaderboardBounds,
+                new LeaderboardButton.LeaderboardButtonListener() {
+                    @Override
+                    public void onLeaderboard() {
+                        GameManagement.getInstance().displayLeaderboard();
+                    }
+                });
+        addActor(leaderboardButton);
     }
 
     public void endContact(Contact contact) {

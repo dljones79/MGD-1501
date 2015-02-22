@@ -7,6 +7,10 @@ package com.fullsail.djones.android.ninjaquest.utils;
  */
 public interface EventListener {
 
+    public void signIn();
+    public void signOut();
+    public boolean isSignedIn();
+    public void rateGame();
     public void submitScore(int score);
     public void displayLeaderboard();
     public void share();

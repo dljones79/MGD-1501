@@ -45,7 +45,7 @@ public class Constants {
     public static final float ENEMY_X = 40f;
     public static final float ENEMY_DENSITY = GOODNINJA_DENSITY;
     public static final float STANDING_NINJA_Y = 1.5f;
-    public static final float FLYING_EYE_Y = 3f;
+    public static final float FLYING_EYE_Y = 4f;
     public static final float BLUE_CREATURE_Y = 2f;
     public static final Vector2 ENEMY_VELOCITY = new Vector2(-11f, 0);
 
@@ -84,6 +84,8 @@ public class Constants {
     public static final String PLAY_BUTTON_NAME = "start_button";
     public static final String PAUSE_BUTTON_NAME = "pause_button";
     public static final String INSTRUCTIONS_BUTTON_NAME = "instructions";
+    public static final String LEADERBOARD_BUTTON_NAME = "leaderboard";
+    public static final String SHARE_BUTTON_NAME = "share";
 
     // Game Name
     public static final String GAME_TITLE = "Ninja Quest";
@@ -100,4 +102,9 @@ public class Constants {
     public static final String ABOUT_NAME = "about";
     public static final String ABOUT_TEXT = "Developed by: David Jones\nFor: Mobile Game Design 1501\n" +
             "Full Sail University\n Enemy Graphics: ramtam\nSound Effects: David Jones";
+
+    // For Sharing
+    public static final String SHARE_MESSAGE = "Check out this cool app!";
+    public static final String SHARE_HEADING = "Ninja Quest";
+
 }

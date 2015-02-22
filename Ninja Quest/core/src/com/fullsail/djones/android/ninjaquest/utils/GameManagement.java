@@ -54,6 +54,27 @@ public class GameManagement implements EventListener {
         this.eventListener = eventListener;
     }
 
+
+    @Override
+    public void signIn() {
+
+    }
+
+    @Override
+    public void signOut() {
+
+    }
+
+    @Override
+    public boolean isSignedIn() {
+        return false;
+    }
+
+    @Override
+    public void rateGame() {
+
+    }
+
     @Override
     public void submitScore(int score) {
         eventListener.submitScore(score);
