@@ -177,6 +177,7 @@ public class GameStage extends Stage implements ContactListener {
                 GameManagement.getInstance().share();
             }
         });
+        addActor(shareButton);
     }
 
     // Set up Score Display

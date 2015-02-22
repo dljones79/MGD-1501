@@ -222,34 +222,34 @@ pause_button
 share
   rotate: false
   xy: 2, 922
-  size: 107, 107
+  size: 114, 116
   orig: 121, 121
-  offset: 7, 7
+  offset: 7, 0
   index: -1
 start_button
   rotate: false
-  xy: 111, 922
+  xy: 118, 922
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 sushi1
   rotate: false
-  xy: 263, 922
+  xy: 270, 922
   size: 62, 44
   orig: 70, 47
   offset: 4, 1
   index: -1
 sushi2
   rotate: false
-  xy: 327, 922
+  xy: 334, 922
   size: 62, 42
   orig: 70, 47
   offset: 4, 1
   index: -1
 sushi3
   rotate: false
-  xy: 391, 922
+  xy: 398, 922
   size: 61, 44
   orig: 70, 47
   offset: 3, 0
