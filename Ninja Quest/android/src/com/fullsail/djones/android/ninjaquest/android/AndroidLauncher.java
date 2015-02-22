@@ -16,8 +16,8 @@ import com.google.example.games.basegameutils.GameHelper;
 
 public class AndroidLauncher extends AndroidApplication implements EventListener, GameHelper.GameHelperListener {
 
+    // Create instance of GameHelper from BaseGameUtils
     private GameHelper gameHelper;
-    private final static int REQUEST_CODE_UNUSED = 7779;
 
     private static String LOCAL_LEADERBOARD_REQUESTED = "LOCAL_LEADERBOARD_REQUESTED";
 
@@ -67,6 +67,7 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         gameHelper.onActivityResult(requestCode, resultCode, data);
     }
 
+    // Override method for singning in.
     @Override
     public void signIn() {
         try {
@@ -81,6 +82,7 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         }
     }
 
+    // Override method for signing out
     @Override
     public void signOut() {
         try {
@@ -95,17 +97,20 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         }
     }
 
+    // Checks to see if user is signed in
     @Override
     public boolean isSignedIn() {
         return gameHelper.isSignedIn();
     }
 
+    // Rate game...button not implemented yet.
     @Override
     public void rateGame() {
         String string = "https://play.google.com/store/apps/details?id=com.fullsail.djones.android.ninjaquest";
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(string)));
     }
 
+    // Method to submit score to leaderboard
     @Override
     public void submitScore(int score) {
         if (gameHelper.isSignedIn()) {
@@ -115,6 +120,7 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         }
     }
 
+    // Method to display the leaderboard
     @Override
     public void displayLeaderboard() {
         if (gameHelper.isSignedIn()) {
@@ -126,6 +132,7 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         }
     }
 
+    // Method to share game through social sharing
     @Override
     public void share() {
         String url = String.format("http://play.google.com/store/apps/details?id=%s",
@@ -137,11 +144,13 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         startActivity(Intent.createChooser(share, Constants.SHARE_HEADING));
     }
 
+    // If sign in failed
     @Override
     public void onSignInFailed() {
         mLeaderboardRequested = false;
     }
 
+    // If sign in succeeded
     @Override
     public void onSignInSucceeded() {
         if (GameManagement.getInstance().hasSavedMaxScore()) {
