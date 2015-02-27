@@ -86,6 +86,7 @@ public class Constants {
     public static final String INSTRUCTIONS_BUTTON_NAME = "instructions";
     public static final String LEADERBOARD_BUTTON_NAME = "leaderboard";
     public static final String SHARE_BUTTON_NAME = "share";
+    public static final String ACHIEVEMENTS_BUTTON_NAME = "achievements";
 
     // Game Name
     public static final String GAME_TITLE = "Ninja Quest";

@@ -40,10 +40,15 @@ public class GoodNinja extends GameActor {
     // Time for animation
     private float stateTime;
 
+    // For Achievement
+    private int jumpCounter;
+
     // Constructor
     public GoodNinja(Body body) {
 
         super(body);
+
+        jumpCounter = 0;
 
         TextureAtlas textureAtlas = new TextureAtlas(Constants.ATLAS_PATH);
         TextureRegion[] runningTextures = new TextureRegion[Constants.NINJA_RUNNING_REGION.length];
@@ -80,6 +85,7 @@ public class GoodNinja extends GameActor {
         if (!(ninjaJumping || ninjaSliding || ninjaCollision)){
             actorBody.applyLinearImpulse(getUserData().getLinearJump(), actorBody.getWorldCenter(), true);
             ninjaJumping = true;
+            jumpCounter++;
         }
     }
 
@@ -171,5 +177,9 @@ public class GoodNinja extends GameActor {
     public void setGravity(float gravity){
         actorBody.setGravityScale(gravity);
         actorBody.resetMassData();
+    }
+
+    public int getJumpCounter() {
+        return jumpCounter;
     }
 }

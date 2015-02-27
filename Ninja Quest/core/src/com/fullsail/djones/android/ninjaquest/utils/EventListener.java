@@ -11,8 +11,17 @@ public interface EventListener {
     public void signOut();
     public boolean isSignedIn();
     public void rateGame();
-    public void submitScore(int score);
-    public void displayLeaderboard();
-    public void share();
+    public void submitScore(int score);                     // submit score to GPS
+    public void displayLeaderboard();                       // display GPS leaderboard
+    public void share();                                    // share game socially
+    public void displayAchievements();                      // display GPS achievements
+    public void unlockAchievement(String id);               // unlock an achievement
+    public void incrementAchievement(String id, int steps); // increment an achievement
+    public String get10JumpAchievementId();
+    public String get50JumpAchievementId();
+    public String get100JumpAchievementId();
+    public String getFirstHitAchievementId();
+    public String getAddictedAchievementId();
+    public String getTutorialWizardAchievementId();
 
 }

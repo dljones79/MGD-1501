@@ -9,254 +9,261 @@ about
   orig: 121, 121
   offset: 4, 4
   index: -1
-black_walk1
+achievements
   rotate: false
   xy: 117, 2
+  size: 121, 121
+  orig: 121, 121
+  offset: 0, 0
+  index: -1
+black_walk1
+  rotate: false
+  xy: 240, 2
   size: 72, 72
   orig: 88, 88
   offset: 8, 8
   index: -1
 black_walk2
   rotate: false
-  xy: 191, 2
+  xy: 314, 2
   size: 64, 72
   orig: 88, 88
   offset: 12, 8
   index: -1
 black_walk3
   rotate: false
-  xy: 257, 2
+  xy: 380, 2
   size: 56, 72
   orig: 88, 88
   offset: 16, 8
   index: -1
 black_walk4
   rotate: false
-  xy: 315, 2
+  xy: 438, 2
   size: 72, 72
   orig: 88, 88
   offset: 8, 8
   index: -1
 blue_creature1
   rotate: false
-  xy: 389, 2
+  xy: 2, 125
   size: 62, 63
   orig: 64, 69
   offset: 1, 5
   index: -1
 blue_creature2
   rotate: false
-  xy: 2, 119
+  xy: 66, 125
   size: 60, 66
   orig: 65, 69
   offset: 3, 0
   index: -1
 blue_creature3
   rotate: false
-  xy: 64, 119
+  xy: 128, 125
   size: 60, 64
   orig: 63, 69
   offset: 2, 0
   index: -1
 blue_creature4
   rotate: false
-  xy: 126, 119
+  xy: 190, 125
   size: 62, 61
   orig: 64, 69
   offset: 1, 5
   index: -1
 dismiss
   rotate: false
-  xy: 190, 119
+  xy: 254, 125
   size: 124, 124
   orig: 125, 125
   offset: 0, 1
   index: -1
 flying_eye1
   rotate: false
-  xy: 316, 119
+  xy: 380, 125
   size: 60, 56
   orig: 68, 59
   offset: 4, 2
   index: -1
 flying_eye2
   rotate: false
-  xy: 378, 119
+  xy: 442, 125
   size: 63, 53
   orig: 63, 59
   offset: 0, 6
   index: -1
 flying_eye3
   rotate: false
-  xy: 443, 119
+  xy: 2, 251
   size: 61, 55
   orig: 61, 59
   offset: 0, 4
   index: -1
 flying_eye4
   rotate: false
-  xy: 2, 245
+  xy: 65, 251
   size: 62, 56
   orig: 64, 59
   offset: 2, 2
   index: -1
 instructions
   rotate: false
-  xy: 66, 245
+  xy: 129, 251
   size: 111, 115
   orig: 121, 121
   offset: 5, 2
   index: -1
 leaderboard
   rotate: false
-  xy: 179, 245
+  xy: 242, 251
   size: 121, 121
   orig: 121, 121
   offset: 0, 0
   index: -1
 ninjaCat_hit
   rotate: false
-  xy: 302, 245
+  xy: 365, 251
   size: 120, 107
   orig: 140, 124
   offset: 17, 8
   index: -1
 ninjaCat_jump1
   rotate: false
-  xy: 2, 368
+  xy: 2, 374
   size: 120, 124
   orig: 141, 148
   offset: 5, 14
   index: -1
 ninjaCat_jump2
   rotate: false
-  xy: 124, 368
+  xy: 124, 374
   size: 123, 135
   orig: 155, 148
   offset: 15, 10
   index: -1
 ninjaCat_jump3
   rotate: false
-  xy: 249, 368
+  xy: 249, 374
   size: 131, 128
   orig: 159, 148
   offset: 14, 10
   index: -1
 ninjaCat_jump4
   rotate: false
-  xy: 2, 505
+  xy: 2, 511
   size: 130, 128
   orig: 153, 148
   offset: 14, 10
   index: -1
 ninjaCat_jump5
   rotate: false
-  xy: 134, 505
+  xy: 134, 511
   size: 131, 127
   orig: 168, 148
   offset: 24, 8
   index: -1
 ninjaCat_jump6
   rotate: false
-  xy: 267, 505
+  xy: 267, 511
   size: 131, 130
   orig: 177, 174
   offset: 23, 17
   index: -1
 ninjaCat_run1
   rotate: false
-  xy: 2, 637
+  xy: 2, 643
   size: 121, 128
   orig: 144, 164
   offset: 15, 23
   index: -1
 ninjaCat_run2
   rotate: false
-  xy: 125, 637
+  xy: 125, 643
   size: 127, 133
   orig: 147, 164
   offset: 10, 17
   index: -1
 ninjaCat_run3
   rotate: false
-  xy: 254, 637
+  xy: 254, 643
   size: 123, 132
   orig: 158, 164
   offset: 14, 29
   index: -1
 ninjaCat_run4
   rotate: false
-  xy: 379, 637
+  xy: 379, 643
   size: 131, 135
   orig: 154, 164
   offset: 12, 29
   index: -1
 ninjaCat_run5
   rotate: false
-  xy: 2, 774
+  xy: 2, 780
   size: 118, 136
   orig: 168, 164
   offset: 35, 20
   index: -1
 ninjaCat_slide1
   rotate: false
-  xy: 122, 774
+  xy: 122, 780
   size: 107, 123
   orig: 146, 123
   offset: 22, 0
   index: -1
 ninjaCat_slide2
   rotate: false
-  xy: 231, 774
+  xy: 231, 780
   size: 124, 146
   orig: 168, 151
   offset: 30, 5
   index: -1
 pause_button
   rotate: false
-  xy: 357, 774
+  xy: 357, 780
   size: 100, 100
   orig: 128, 128
   offset: 14, 14
   index: -1
 share
   rotate: false
-  xy: 2, 922
+  xy: 2, 928
   size: 114, 116
   orig: 121, 121
   offset: 7, 0
   index: -1
 start_button
   rotate: false
-  xy: 118, 922
+  xy: 118, 928
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 sushi1
   rotate: false
-  xy: 270, 922
+  xy: 270, 928
   size: 62, 44
   orig: 70, 47
   offset: 4, 1
   index: -1
 sushi2
   rotate: false
-  xy: 334, 922
+  xy: 334, 928
   size: 62, 42
   orig: 70, 47
   offset: 4, 1
   index: -1
 sushi3
   rotate: false
-  xy: 398, 922
+  xy: 398, 928
   size: 61, 44
   orig: 70, 47
   offset: 3, 0
   index: -1
 tap
   rotate: false
-  xy: 2, 1074
+  xy: 2, 1080
   size: 400, 400
   orig: 400, 400
   offset: 0, 0

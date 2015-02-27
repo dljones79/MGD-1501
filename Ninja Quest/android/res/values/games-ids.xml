@@ -5,6 +5,12 @@ Save this file as res/values/games-ids.xml in your project.
 -->
 <resources>
     <string name="app_id">591434802190</string>
+    <string name="achievement_first_hit">CgkIjsiLopsREAIQCQ</string>
+    <string name="achievement_10_jumps">CgkIjsiLopsREAIQCg</string>
+    <string name="achievement_50_jumps">CgkIjsiLopsREAIQCw</string>
+    <string name="achievement_100_jumps">CgkIjsiLopsREAIQDA</string>
+    <string name="achievement_addicted">CgkIjsiLopsREAIQDw</string>
+    <string name="achievement_tutorial_wizard">CgkIjsiLopsREAIQEA</string>
     <string name="achievement_ach_1">CgkIjsiLopsREAIQAw</string>
     <string name="achievement_ach_2">CgkIjsiLopsREAIQBA</string>
     <string name="achievement_ach_3">CgkIjsiLopsREAIQBQ</string>

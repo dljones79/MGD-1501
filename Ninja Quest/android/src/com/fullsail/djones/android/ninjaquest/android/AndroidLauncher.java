@@ -20,8 +20,10 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
     private GameHelper gameHelper;
 
     private static String LOCAL_LEADERBOARD_REQUESTED = "LOCAL_LEADERBOARD_REQUESTED";
+    private static String LOCAL_ACHIEVEMENTS_REQUESTED = "LOCAL_ACHIEVEMENTS_REQUESTED";
 
     private boolean mLeaderboardRequested;
+    private boolean mAchievementsRequested;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(LOCAL_LEADERBOARD_REQUESTED, mLeaderboardRequested);
+        outState.putBoolean(LOCAL_ACHIEVEMENTS_REQUESTED, mAchievementsRequested);
     }
 
     @Override
@@ -47,6 +50,7 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         super.onRestoreInstanceState(savedInstanceState);
 
         mLeaderboardRequested = savedInstanceState.getBoolean(LOCAL_LEADERBOARD_REQUESTED, false);
+        mAchievementsRequested = savedInstanceState.getBoolean(LOCAL_ACHIEVEMENTS_REQUESTED, false);
     }
 
     @Override
@@ -144,10 +148,71 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         startActivity(Intent.createChooser(share, Constants.SHARE_HEADING));
     }
 
+    // Method to display GPS achievements for the game
+    @Override
+    public void displayAchievements() {
+        if (gameHelper.isSignedIn()) {
+            startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 25);
+        } else {
+            gameHelper.beginUserInitiatedSignIn();
+            mAchievementsRequested = true;
+        }
+    }
+
+    // Unlock an achievement for the game
+    @Override
+    public void unlockAchievement(String id) {
+        if (gameHelper.isSignedIn()) {
+            Games.Achievements.unlock(gameHelper.getApiClient(), id);
+            GameManagement.getInstance().setAchievementUnlocked(id);
+        }
+    }
+
+    // Increment an achievement for the game
+    @Override
+    public void incrementAchievement(String id, int steps) {
+        if (gameHelper.isSignedIn()) {
+            Games.Achievements.increment(gameHelper.getApiClient(), id, steps);
+            GameManagement.getInstance().incrementAchievementCount(id, steps);
+        }
+    }
+
+    // Achievements
+    @Override
+    public String get10JumpAchievementId() {
+        return getString(R.string.achievement_10_jumps);
+    }
+
+    @Override
+    public String get50JumpAchievementId() {
+        return getString(R.string.achievement_50_jumps);
+    }
+
+    @Override
+    public String get100JumpAchievementId() {
+        return getString(R.string.achievement_100_jumps);
+    }
+
+    @Override
+    public String getFirstHitAchievementId() {
+        return getString(R.string.achievement_first_hit);
+    }
+
+    @Override
+    public String getAddictedAchievementId() {
+        return getString(R.string.achievement_addicted);
+    }
+
+    @Override
+    public String getTutorialWizardAchievementId() {
+        return getString(R.string.achievement_tutorial_wizard);
+    }
+
     // If sign in failed
     @Override
     public void onSignInFailed() {
         mLeaderboardRequested = false;
+        mAchievementsRequested = false;
     }
 
     // If sign in succeeded
@@ -160,6 +225,11 @@ public class AndroidLauncher extends AndroidApplication implements EventListener
         if (mLeaderboardRequested) {
             displayLeaderboard();
             mLeaderboardRequested = false;
+        }
+
+        if (mAchievementsRequested) {
+            displayAchievements();
+            mAchievementsRequested = false;
         }
 
     }

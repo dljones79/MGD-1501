@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.fullsail.djones.android.ninjaquest.actors.AboutButton;
 import com.fullsail.djones.android.ninjaquest.actors.AboutText;
+import com.fullsail.djones.android.ninjaquest.actors.AchievementsButton;
 import com.fullsail.djones.android.ninjaquest.actors.Background;
 import com.fullsail.djones.android.ninjaquest.actors.Baddie;
 import com.fullsail.djones.android.ninjaquest.actors.CollectionAmount;
@@ -98,6 +99,7 @@ public class GameStage extends Stage implements ContactListener {
     private InstructionsButton instructionsButton;
     private LeaderboardButton leaderboardButton;
     private ShareButton shareButton;
+    private AchievementsButton achievementsButton;
 
 
     private float timePlayed;
@@ -162,6 +164,7 @@ public class GameStage extends Stage implements ContactListener {
         createLeaderboard();
         displayAboutButton();
         setupShareButton();
+        setupAchievmentsButton();
         displayInstructionsButton();
         setupItemQuantityDisplay();
     }
@@ -187,6 +190,20 @@ public class GameStage extends Stage implements ContactListener {
                 getCamera().viewportHeight / 8);
         score = new Score(bounds);
         addActor(score);
+    }
+
+    // Set up achievements
+    private void setupAchievmentsButton() {
+        Rectangle buttonBounds = new Rectangle(getCamera().viewportWidth * 23 / 25,
+                getCamera().viewportHeight / 4, getCamera().viewportHeight / 10,
+                getCamera().viewportHeight / 10);
+        achievementsButton = new AchievementsButton(buttonBounds, new AchievementsButton.AchievementsButtonListener() {
+            @Override
+            public void onAchievements() {
+                GameManagement.getInstance().displayAchievements();
+            }
+        });
+        addActor(achievementsButton);
     }
 
     // Set up item quantity Display
@@ -407,7 +424,12 @@ public class GameStage extends Stage implements ContactListener {
             }
             goodNinja.collision();
             hitSound.play();
+
+            // Submit score to GPS
+            // Adjust achievements
             GameManagement.getInstance().submitScore(score.getScore());
+            GameManagement.getInstance().addPlayedGame();
+            GameManagement.getInstance().addJumpCount(goodNinja.getJumpCounter());
             onGameOver();
         }
 
@@ -498,6 +520,7 @@ public class GameStage extends Stage implements ContactListener {
             public void onInstruct() {
                 if (GameManagement.getInstance().getCurrentState() == GameStates.OVER){
                     onInstructionsButton();
+                    GameManagement.getInstance().unlockTutorialAchievement();
                 } else {
                     clear();
                     createWorld();
